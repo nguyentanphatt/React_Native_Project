@@ -5,16 +5,18 @@ import Home from "./page/Home";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import SearchBar from "./components/SearchBar";
+import Electronics from "./page/Electronics";
 const Stack = createNativeStackNavigator()
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Header />
-      <SearchBar />
+      {/* <Header />
+      <SearchBar /> */}
       <NavigationContainer>
         <Stack.Navigator screenOptions={{headerShown: false}}>
           <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="Electronics" component={Electronics} />
         </Stack.Navigator>
       </NavigationContainer>
       <Footer />

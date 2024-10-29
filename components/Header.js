@@ -1,14 +1,16 @@
 import React from 'react'
-import { Text, View, Image, StyleSheet } from 'react-native'
+import { Text, View, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import user_icon from '../assets/icon/user_icon.png'
 import left_arrow from '../assets/icon/left-arrow.png'
 import cart from '../assets/icon/cart.png'
-const Header = () => {
+const Header = ( {title, navigation} ) => {
   return (
     <View style={styles.container}>
         <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-            <Image source={left_arrow} style={{width: 30, height: 30, marginRight: 10}}/>
-            <Text style={{fontWeight: '700', fontSize: 18}}>All Deals</Text>
+            <TouchableOpacity onPress={()=>navigation.navigate('Home')}>
+                <Image source={left_arrow} style={{width: 30, height: 30, marginRight: 10}}/>
+            </TouchableOpacity>
+            <Text style={{fontWeight: '700', fontSize: 18}}>{title}</Text>
         </View>
         <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
             <Image source={cart} style={{width: 30, height: 30, marginRight: 10}}/>
