@@ -11,7 +11,7 @@ const Item = ( {image, name, rating, price} ) => {
                 <Image source={star} style={{width: 15, height: 15}}/>
                 <Text>{rating}</Text>
             </View>
-            <Text style={{color: '#0F89D1', fontWeight: '600'}}>${price}</Text>
+            <Text style={{color: '#1ac1d8', fontWeight: '600'}}>${price}</Text>
         </View>
     </View>
   )

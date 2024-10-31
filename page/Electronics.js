@@ -34,7 +34,8 @@ const Electronics = ({ route, navigation }) => {
       price: 899,
       image: phone_1,
       category: "Smart Phone",
-      special: "Best Sales"
+      special: "Best Sales",
+      rating: '4.5'
     },
     {
       id: 2,
@@ -42,7 +43,8 @@ const Electronics = ({ route, navigation }) => {
       price: 799,
       image: phone_2,
       category: "Smart Phone",
-      special: "Best Matched"
+      special: "Best Matched",
+      rating: '4.5'
     },
     {
       id: 3,
@@ -50,7 +52,8 @@ const Electronics = ({ route, navigation }) => {
       price: 999,
       image: phone_3,
       category: "Smart Phone",
-      special: "Popular"
+      special: "Popular",
+      rating: '4.5'
     },
     {
       id: 4,
@@ -58,7 +61,8 @@ const Electronics = ({ route, navigation }) => {
       price: 599,
       image: phone_4,
       category: "Ipad",
-      special: "Best Sales"
+      special: "Best Sales",
+      rating: '4.5'
     },
     {
       id: 5,
@@ -66,7 +70,8 @@ const Electronics = ({ route, navigation }) => {
       price: 699,
       image: phone_1,
       category: "Ipad",
-      special: "Best Matched"
+      special: "Best Matched",
+      rating: '4.5'
     },
     {
       id: 6,
@@ -74,7 +79,8 @@ const Electronics = ({ route, navigation }) => {
       price: 529,
       image: phone_2,
       category: "Ipad",
-      special: "Popular"
+      special: "Popular",
+      rating: '4.5'
     },
     {
       id: 7,
@@ -82,7 +88,8 @@ const Electronics = ({ route, navigation }) => {
       price: 500,
       image: phone_3,
       category: "Mac",
-      special: "Best Sales"
+      special: "Best Sales",
+      rating: '4.5'
     },
     {
       id: 8,
@@ -90,7 +97,8 @@ const Electronics = ({ route, navigation }) => {
       price: 909,
       image: phone_4,
       category: "Mac",
-      special: "Best Matched"
+      special: "Best Matched",
+      rating: '4.5'
     },
     {
       id: 9,
@@ -98,7 +106,8 @@ const Electronics = ({ route, navigation }) => {
       price: 859,
       image: phone_1,
       category: "Mac",
-      special: "Popular"
+      special: "Popular",
+      rating: '4.5'
     },
   ]
 
@@ -197,7 +206,16 @@ const Electronics = ({ route, navigation }) => {
         </View>
         <FlatList 
             data={filterData}
-            renderItem={({item}) => <ElectronicsItem name={item.name} price={item.price} image={item.image}/>}
+            renderItem={({item}) => 
+            <ElectronicsItem 
+              name={item.name} 
+              price={item.price} 
+              image={item.image}
+              rating={item.rating}
+              navigation={navigation}
+              />
+
+            }
             keyExtractor={itemData.id}
         />
         <View>
@@ -301,7 +319,7 @@ const styles = StyleSheet.create({
     width: 30,
     height: 10,
     borderRadius: 20,
-    backgroundColor: '#0F89D1',
+    backgroundColor: '#1ac1d8',
     marginTop: 5,
     marginBottom: 5
   }

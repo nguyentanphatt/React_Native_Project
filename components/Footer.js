@@ -10,7 +10,7 @@ const Footer = () => {
     <View style={styles.container}>
         <View style={styles.item}>
             <Image source={home_blue} style={{width: 30, height: 30}}/>
-            <Text style={{color: '#0F89D1'}}>Home</Text>
+            <Text style={{color: '#1ac1d8'}}>Home</Text>
         </View>
         <View style={styles.item}>
             <Image source={search} style={{width: 30, height: 30}}/>
