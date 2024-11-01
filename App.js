@@ -5,6 +5,7 @@ import Home from "./page/Home";
 import Footer from "./components/Footer";
 import Electronics from "./page/Electronics";
 import ItemDetail01Screen from "./page/ItemDetail01Screen";
+import Cart from "./page/Cart";
 const Stack = createNativeStackNavigator()
 
 export default function App() {
@@ -17,6 +18,7 @@ export default function App() {
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="Electronics" component={Electronics} />
           <Stack.Screen name="ItemDetail01Screen" component={ItemDetail01Screen} />
+          <Stack.Screen name="Cart" component={Cart} />
         </Stack.Navigator>
       </NavigationContainer>
       <Footer />

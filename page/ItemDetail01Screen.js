@@ -239,7 +239,7 @@ const ItemDetail01Screen = ( {route, navigation} ) => {
             <View style={styles.cartContainer}>
               <Image source={cart_blue} style={{width: 20, height: 20}}/>
             </View>
-            <TouchableOpacity style={styles.buyBtn}>
+            <TouchableOpacity style={styles.buyBtn} onPress={()=>navigation.navigate('Cart',[name, image, price ])}>
               <Text style={{fontSize: 18, fontWeight: '700', color: '#fff'}}>Buy Now</Text>
             </TouchableOpacity>
         </View>
