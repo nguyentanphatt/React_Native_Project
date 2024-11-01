@@ -4,12 +4,10 @@ import {
   View,
   Image,
   ScrollView,
-  Dimensions,
-  TouchableOpacity,
   StyleSheet,
-  ImageBackground,
-  FlatList
+  TouchableOpacity,
 } from "react-native";
+import Swiper from "react-native-swiper";
 import Header from '../components/Header'
 import star from '../assets/icon/star.png'
 import express from '../assets/icon/truck.png'
@@ -19,11 +17,65 @@ import star_blue from '../assets/icon/star_outline.png'
 import half_star from '../assets/icon/half_star.png'
 import user_1 from '../assets/icon/user_1.png'
 import user_2 from '../assets/icon/user_2.png'
+import phone_1 from "../assets/image/1.png";
+import phone_2 from "../assets/image/2.png";
+import phone_3 from "../assets/image/3.png";
+import phone_4 from "../assets/image/4.png";
+import Item from '../components/Item';
+import white_bell from '../assets/icon/white_bell.png'
+import cart_blue from '../assets/icon/cart_blue.png'
 const ItemDetail01Screen = ( {route, navigation} ) => {
   const [name, image, price, rating] = route.params;
+  const itemData = [
+    {
+      id: 1,
+      name: "SmartPhone",
+      price: 899,
+      image: phone_1,
+      category: "Smart Phone",
+      special: "Best Sales",
+      rating: '4.5'
+    },
+    {
+      id: 2,
+      name: "SmartPhone",
+      price: 799,
+      image: phone_2,
+      category: "Smart Phone",
+      special: "Best Matched",
+      rating: '4.5'
+    },
+    {
+      id: 3,
+      name: "SmartPhone",
+      price: 999,
+      image: phone_3,
+      category: "Smart Phone",
+      special: "Popular",
+      rating: '4.5'
+    },
+    {
+      id: 4,
+      name: "SmartPhone",
+      price: 599,
+      image: phone_4,
+      category: "Ipad",
+      special: "Best Sales",
+      rating: '4.5'
+    },
+  ]
+
+  const itemsPerPage = 3;
+
+  const relevanProduct = [];
+  for (let i = 0; i < itemData.length; i += itemsPerPage) {
+    relevanProduct.push(itemData.slice(i, i + itemsPerPage));
+  }
+
+
   return (
     <View style={{backgroundColor: '#fff', flex: 1}}>
-      <Header title={name}/>
+      <Header title={name} navigation={navigation}/>
       <ScrollView>
         <View style={{borderBottomWidth: 1, borderColor: 'lightgray', marginTop: 10}}>
         <Image source={image} style={{width: 300, height: 100, marginLeft: 50, marginTop: 10, borderRadius: 10}}/>
@@ -141,6 +193,56 @@ const ItemDetail01Screen = ( {route, navigation} ) => {
             </View>
           </View>
         </View>
+        <View style={styles.review}>
+            <Text style={{ fontWeight: "700", fontSize: 16 }}>Relevant products</Text>
+            <Text style={{ color: "gray" }}>See all</Text>
+        </View>
+        <View>
+        <Swiper
+            loop={false}
+            showsPagination={false}
+            showsButtons={false}
+            autoplay={false}
+            style={{ height: 170 }}
+          >
+            {relevanProduct.map((page, index) => (
+              <View
+                key={index}
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-around",
+                  paddingVertical: 20,
+                }}
+              >
+                {page.map((item) => (
+                  <Item
+                    image={item.image}
+                    name={item.name}
+                    rating={item.rating}
+                    price={item.price}
+                  />
+                ))}
+              </View>
+            ))}
+          </Swiper>
+          <View style={styles.notification}>
+            <View style={styles.notiBackground}>
+              <Image source={white_bell} style={{width:30, height: 30}}/>
+            </View>
+            <Text style={{color: 'gray'}}>Notify me of promotions</Text>
+            <View style={styles.btnContainer}>
+              <View style={styles.btnCirle}></View>
+            </View>
+          </View>
+        </View>
+        <View style={styles.buy}>
+            <View style={styles.cartContainer}>
+              <Image source={cart_blue} style={{width: 20, height: 20}}/>
+            </View>
+            <TouchableOpacity style={styles.buyBtn}>
+              <Text style={{fontSize: 18, fontWeight: '700', color: '#fff'}}>Buy Now</Text>
+            </TouchableOpacity>
+        </View>
       </ScrollView>
     </View>
   )
@@ -250,5 +352,64 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     marginBottom: 10
+  },
+  notification: {
+    display: 'flex', 
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    height: 100,
+    borderWidth: 1,
+    marginTop: 20,
+    borderRadius: 10,
+    borderColor: 'lightgray',
+    padding: 10,
+    marginBottom: 20
+  },
+  notiBackground:{
+    height: 40,
+    width: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#1ac1d8',
+    borderRadius: 10
+  },
+  btnContainer:{
+    width: 50,
+    height: 30,
+    backgroundColor: 'lightgray',
+    borderRadius: 20,
+    justifyContent: 'center'
+  },
+  btnCirle: {
+    width: 25,
+    height: 25,
+    borderRadius: 25,
+    backgroundColor: 'white',
+    marginLeft: 3
+  },
+  buy:{
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 20
+  },
+  cartContainer:{
+    width: 40,
+    height: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 10,
+    borderColor: '#1ac1d8',
+    borderWidth: 1
+  },
+  buyBtn:{
+    width: '85%',
+    height: 40,
+    borderRadius: 10,
+    backgroundColor: '#1ac1d8',
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 })
