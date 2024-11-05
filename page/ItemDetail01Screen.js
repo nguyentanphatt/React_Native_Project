@@ -24,8 +24,10 @@ import phone_4 from "../assets/image/4.png";
 import Item from '../components/Item';
 import white_bell from '../assets/icon/white_bell.png'
 import cart_blue from '../assets/icon/cart_blue.png'
+import { useCart } from '../context/CartContext';
 const ItemDetail01Screen = ( {route, navigation} ) => {
   const [name, image, price, rating] = route.params;
+  const { addToCart } = useCart()
   const itemData = [
     {
       id: 1,
@@ -72,7 +74,13 @@ const ItemDetail01Screen = ( {route, navigation} ) => {
     relevanProduct.push(itemData.slice(i, i + itemsPerPage));
   }
 
-
+  const handleAddToCart = () => {
+    const item = {
+      name, image, price, rating
+    }
+    addToCart(item)
+    navigation.navigate('Cart')
+  }
   return (
     <View style={{backgroundColor: '#fff', flex: 1}}>
       <Header title={name} navigation={navigation}/>
@@ -239,7 +247,7 @@ const ItemDetail01Screen = ( {route, navigation} ) => {
             <View style={styles.cartContainer}>
               <Image source={cart_blue} style={{width: 20, height: 20}}/>
             </View>
-            <TouchableOpacity style={styles.buyBtn} onPress={()=>navigation.navigate('Cart',[name, image, price ])}>
+            <TouchableOpacity style={styles.buyBtn} onPress={handleAddToCart}>
               <Text style={{fontSize: 18, fontWeight: '700', color: '#fff'}}>Buy Now</Text>
             </TouchableOpacity>
         </View>
