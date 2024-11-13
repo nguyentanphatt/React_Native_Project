@@ -40,7 +40,7 @@ const Home = ({ navigation }) => {
     },
     {
       image: fruit_category,
-      title: "Fresh Fruit",
+      title: "Fresh Fruits",
     },
   ];
 
@@ -94,7 +94,6 @@ const Home = ({ navigation }) => {
   for (let i = 0; i < product.length; i += itemsPerPage) {
     pagesForProduct.push(product.slice(i, i + itemsPerPage));
   }
-
   return (
     <View>
       <Header title="All Deals" navigation={navigation} />
