@@ -4,6 +4,7 @@ import { View, StyleSheet } from "react-native";
 import Home from "./page/Home";
 import Footer from "./components/Footer";
 import Electronics from "./page/Electronics";
+import FreshFruits from "./page/FreshFruits";
 import ItemDetail01Screen from "./page/ItemDetail01Screen";
 import Cart from "./page/Cart";
 import { CartProvider } from "./context/CartContext";
@@ -18,6 +19,7 @@ export default function App() {
         <Stack.Navigator screenOptions={{headerShown: false}}>
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="Electronics" component={Electronics} />
+          <Stack.Screen name="FreshFruits" component={FreshFruits} />
           <Stack.Screen name="ItemDetail01Screen" component={ItemDetail01Screen} />
           <Stack.Screen name="Cart" component={Cart} />
           <Stack.Screen name="Payment" component={Payment} />
