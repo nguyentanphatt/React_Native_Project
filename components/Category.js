@@ -6,7 +6,7 @@ const Category = ( {image, title, navigation} ) => {
         'Electronics': 'purple',
         'Fashion': 'blue',
         'Beauty': 'orange',
-        'Fresh Fruit': 'red',
+        'Fresh Fruits': 'red',
     }
 
     const handleNavigation = () => {
@@ -16,8 +16,8 @@ const Category = ( {image, title, navigation} ) => {
           //  navigation.navigate('Fashion', { title });
         } else if (title === 'Beauty') {
            // navigation.navigate('Beauty', { title });
-        } else if (title === 'Fresh Fruit') {
-          //  navigation.navigate('FreshFruit', { title });
+        } else if (title === 'Fresh Fruits') {
+          navigation.navigate('FreshFruits', [title]);
         }
     };
 
