@@ -7,7 +7,7 @@ const Header = ( {title, navigation} ) => {
   return (
     <View style={styles.container}>
         <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-            <TouchableOpacity onPress={()=>navigation.navigate('Home')}>
+            <TouchableOpacity onPress={()=>navigation.goBack()}>
                 <Image source={left_arrow} style={{width: 30, height: 30, marginRight: 10}}/>
             </TouchableOpacity>
             <Text style={{fontWeight: '700', fontSize: 18}}>{title}</Text>
