@@ -6,9 +6,13 @@ import Footer from "./components/Footer";
 import Electronics from "./page/Electronics";
 import FreshFruits from "./page/FreshFruits";
 import ItemDetail01Screen from "./page/ItemDetail01Screen";
+import Fashion from "./page/Fashion";
 import Cart from "./page/Cart";
 import { CartProvider } from "./context/CartContext";
 import Payment from "./page/Payment";
+import Beauty from "./page/Beauty";
+import PaymentSuccess from "./page/PaymentSuccess";
+//import FilterScreen from "./page/FilterScreen";
 const Stack = createNativeStackNavigator()
 
 export default function App() {
@@ -20,6 +24,10 @@ export default function App() {
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="Electronics" component={Electronics} />
           <Stack.Screen name="FreshFruits" component={FreshFruits} />
+          <Stack.Screen name="Fashion" component={Fashion} />
+          <Stack.Screen name="Beauty" component={Beauty} />
+          <Stack.Screen name="PaymentSuccess" component={PaymentSuccess} />
+          {/*<Stack.Screen name="FilterScreen" component={FilterScreen} />*/}
           <Stack.Screen name="ItemDetail01Screen" component={ItemDetail01Screen} />
           <Stack.Screen name="Cart" component={Cart} />
           <Stack.Screen name="Payment" component={Payment} />

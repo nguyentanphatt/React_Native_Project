@@ -16,8 +16,11 @@ import maestro from '../assets/icon/maestro.png'
 import payment from '../assets/icon/payment.png'
 import left_arrow from "../assets/icon/left-arrow.png";
 const Payment = ( {navigation} ) => {
-    const { totalAmount } = useCart();
+    const { totalAmount, calculateTax, totalPlusTaxes } = useCart();
     const [checked, setChecked] = useState('visa');
+    let totalMoney = totalAmount();
+    let tax = calculateTax();
+    let totalPlusTax = totalPlusTaxes();
   return (
     <View style={{
         flex: 1,
@@ -58,7 +61,9 @@ const Payment = ( {navigation} ) => {
             <RadioButton 
                 value="visa"
                 status={ checked === 'visa' ? 'checked' : 'unchecked' }
-                onPress={() => setChecked('visa')}
+                onPress={() => {
+                    setChecked('visa');
+                }}
             />
         </View>
         <View style={{
@@ -77,7 +82,9 @@ const Payment = ( {navigation} ) => {
             <RadioButton 
                 value="maestro"
                 status={ checked === 'maestro' ? 'checked' : 'unchecked' }
-                onPress={() => setChecked('maestro')}
+                onPress={() => {
+                    setChecked('maestro')
+                }}
             />
         </View>
         <View style={{
@@ -92,11 +99,13 @@ const Payment = ( {navigation} ) => {
             marginTop: 20
         }}>
             <Image source={paypal} style={{width: 40, height: 40}}/>
-            <Text style={{marginRight: 80}}>abc@gmail.com</Text>
+            <Text style={{marginRight: 80}}>******aple@gmail.com</Text>
             <RadioButton 
                 value="paypal"
                 status={ checked === 'paypal' ? 'checked' : 'unchecked' }
-                onPress={() => setChecked('paypal')}
+                onPress={() => {
+                    setChecked('paypal');
+                }}
             />
         </View>
         <TouchableOpacity
@@ -111,6 +120,7 @@ const Payment = ( {navigation} ) => {
           flexDirection: 'row',
           marginTop: 40                
         }}
+        onPress={()=>navigation.navigate('PaymentSuccess', [totalMoney, checked, tax, totalPlusTax] )}
       >
         <Image source={payment} style={{width: 30, height: 30, marginRight: 10}}/>
         <Text style={{ fontSize: 18, fontWeight: "700", color: "#fff" }}>
