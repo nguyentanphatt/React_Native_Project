@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, View, Image, StyleSheet, TextInput } from 'react-native'
+import {Text, View, Image, StyleSheet, TextInput, Touchable, TouchableOpacity} from 'react-native'
 import home_blue from '../assets/icon/home_blue.png'
 import search from '../assets/icon/search.png'
 import heart from '../assets/icon/heart.png'
@@ -9,8 +9,10 @@ const Footer = () => {
   return (
     <View style={styles.container}>
         <View style={styles.item}>
-            <Image source={home_blue} style={{width: 30, height: 30}}/>
-            <Text style={{color: '#1ac1d8'}}>Home</Text>
+            <TouchableOpacity>
+                <Image source={home_blue} style={{width: 30, height: 30}}/>
+                <Text style={{color: '#1ac1d8'}}>Home</Text>
+            </TouchableOpacity>
         </View>
         <View style={styles.item}>
             <Image source={search} style={{width: 30, height: 30}}/>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import {
   Text,
   View,
@@ -18,24 +18,19 @@ import pear from "../assets/image/pear.png";
 import peach from "../assets/image/peach.png";
 import pomegranate from "../assets/image/pomegranate.png";
 import FruitItem from "../components/FruitItem";
+import {useDispatch, useSelector} from "react-redux";
+import {fetchFruits} from "../services/slices/FruitsSlice";
 
 
 const FreshFruits = ({ route, navigation }) => {
   const [title] = route.params;
-  const [seeAll, setSeeAll] = useState(false);
-
-  const itemData = [
-    { id: 1, name: "Pear", price: 3, image: pear, rating: '4.5' },
-    { id: 2, name: "Avocado", price: 4, image: avocado, rating: '4.5' },
-    { id: 3, name: "Cherry", price: 10, image: cherry, rating: '4.5' },
-    { id: 4, name: "Orange", price: 7, image: orange, rating: '4.5' },
-  ];
-
-  const relevantData = [
-    { id: 5, name: "Peach", price: 15, image: peach, rating: '4.5' },
-    { id: 6, name: "Pomegranate", price: 23, image: pomegranate, rating: '4.5' },
-  ];
-
+  const dispatch = useDispatch()
+  const status = useSelector((state)=>state.fruits.status)
+  let fruits = useSelector((state) => state.fruits.fruits)
+  useEffect(()=>{
+    dispatch(fetchFruits())
+  },[dispatch])
+  const relevantData = fruits.slice(0, 3);
   return (
       <View style={{ backgroundColor: '#fff', flex: 1}}>
         <Header title={title} navigation={navigation} />
@@ -50,19 +45,20 @@ const FreshFruits = ({ route, navigation }) => {
         </View>
         <View style={{height: 200}}>
         <FlatList
-            data={itemData}
+            data={fruits}
             renderItem={({item}) =>
                 <FruitItem.FruitItem
                     name={item.name}
                     price={item.price}
                     image={item.image}
                     rating={item.rating}
+                    category={item.category}
                     navigation={navigation}
                 />
 
             }
             numColumns={2}
-            keyExtractor={itemData.id}
+            keyExtractor={item => item.id.toString()}
         />
         </View>
         <View>
@@ -81,11 +77,12 @@ const FreshFruits = ({ route, navigation }) => {
                     price={item.price}
                     image={item.image}
                     rating={item.rating}
+                    category={item.category}
                     navigation={navigation}
                 />
 
             }
-            keyExtractor={itemData.id}
+            keyExtractor={relevantData => relevantData.id.toString()}
         />
       </View>
   );

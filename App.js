@@ -12,11 +12,16 @@ import { CartProvider } from "./context/CartContext";
 import Payment from "./page/Payment";
 import Beauty from "./page/Beauty";
 import PaymentSuccess from "./page/PaymentSuccess";
+import FeedbackScreen from "./page/Feedback"
+import { Provider } from 'react-redux';
+import { store } from './services/Store';
+
 //import FilterScreen from "./page/FilterScreen";
 const Stack = createNativeStackNavigator()
 
 export default function App() {
   return (
+      <Provider store={store}>
     <CartProvider>
       <View style={styles.container}>
       <NavigationContainer>
@@ -27,6 +32,7 @@ export default function App() {
           <Stack.Screen name="Fashion" component={Fashion} />
           <Stack.Screen name="Beauty" component={Beauty} />
           <Stack.Screen name="PaymentSuccess" component={PaymentSuccess} />
+          <Stack.Screen name="FeedbackScreen" component={FeedbackScreen} />
           {/*<Stack.Screen name="FilterScreen" component={FilterScreen} />*/}
           <Stack.Screen name="ItemDetail01Screen" component={ItemDetail01Screen} />
           <Stack.Screen name="Cart" component={Cart} />
@@ -36,6 +42,7 @@ export default function App() {
       <Footer />
     </View>
     </CartProvider>
+    </Provider>
   );
 }
 const styles = StyleSheet.create({

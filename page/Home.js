@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {
   Text,
   View,
@@ -7,7 +7,7 @@ import {
   Dimensions,
   TouchableOpacity,
   StyleSheet,
-  ImageBackground,
+  ImageBackground, RefreshControl,
 } from "react-native";
 import Swiper from "react-native-swiper";
 import Category from "../components/Category";
@@ -24,6 +24,8 @@ import sneaker_1 from "../assets/image/sneaker_1.png";
 import tablet_1 from "../assets/image/tablet_1.png";
 import pear from "../assets/image/pear.png";
 import Item from "../components/Item";
+import {useDispatch, useSelector} from "react-redux";
+import {fetchElectronics, fetchRandom} from "../services/slices/ElectronicsSlice";
 const Home = ({ navigation }) => {
   const category = [
     {
@@ -43,46 +45,23 @@ const Home = ({ navigation }) => {
       title: "Fresh Fruits",
     },
   ];
+  const [refreshing, setRefreshing] = React.useState(false);
 
-  const product = [
-    {
-      name: "Shoes",
-      rating: "4.5",
-      price: "299",
-      image: sneaker_1,
-    },
-    {
-      name: "Tablet",
-      rating: "4.5",
-      price: "499",
-      image: tablet_1,
-    },
-    {
-      name: "Pear",
-      rating: "4.5",
-      price: "59",
-      image: pear,
-    },
-    {
-      name: "Macbook",
-      rating: "4.5",
-      price: "599",
-      image: macbook,
-    },
-    {
-      name: "Bags",
-      rating: "4.5",
-      price: "99",
-      image: bags,
-    },
-    {
-      name: "Sneaker",
-      rating: "4.5",
-      price: "159",
-      image: banner,
-    },
-  ];
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    navigation.navigate('Cart')
+    setTimeout(() => {
 
+      navigation.navigate('Home')
+      product = [];
+      setRefreshing(false);
+    }, 200);
+  }, []);
+  const dispatch = useDispatch();
+  let product = useSelector((state) => state.electronics.electronics)
+  useEffect(()=>{
+    dispatch(fetchRandom())
+  },[dispatch])
   const itemsPerPage = 3;
 
   const pagesForCategory = [];
@@ -94,11 +73,15 @@ const Home = ({ navigation }) => {
   for (let i = 0; i < product.length; i += itemsPerPage) {
     pagesForProduct.push(product.slice(i, i + itemsPerPage));
   }
+
+
   return (
     <View>
       <Header title="All Deals" navigation={navigation} />
       <SearchBar />
-      <ScrollView style={{ backgroundColor: "#fff" }}>
+      <ScrollView style={{ backgroundColor: "#fff" }} refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }>
         <View>
           <Swiper
             loop={false}
@@ -214,6 +197,8 @@ const Home = ({ navigation }) => {
                     name={item.name}
                     rating={item.rating}
                     price={item.price}
+                    category={item.category}
+                    navigation={navigation}
                   />
                 ))}
               </View>

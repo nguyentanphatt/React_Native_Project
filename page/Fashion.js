@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import {
   Text,
   View,
@@ -18,23 +18,22 @@ import hoodie from "../assets/image/hoodie.png";
 import ina from "../assets/image/ina.png";
 import hat from "../assets/image/hat.png";
 import FruitItem from "../components/FruitItem";
+import {useDispatch, useSelector} from "react-redux";
+import {fetchBeauty} from "../services/slices/BeautySlice";
+import {fetchFashion} from "../services/slices/FashionSlice";
 
 
 const Fashion = ({ route, navigation }) => {
   const [title] = route.params;
-  const [seeAll, setSeeAll] = useState(false);
+  const dispatch = useDispatch()
+  const status = useSelector((state)=>state.fashion.status)
+  let fashion = useSelector((state) => state.fashion.fashion)
 
-  const itemData = [
-    { id: 1, name: "Jacket", price: 15, image: jacket, rating: '4.5' },
-    { id: 2, name: "T-Shirt", price: 13, image: tshirt, rating: '4.5' },
-    { id: 3, name: "Sneaker", price: 28, image: sneaker, rating: '4.5' },
-    { id: 4, name: "Hoodie", price: 10, image: hoodie, rating: '4.5' },
-  ];
+  useEffect(()=>{
+    dispatch(fetchFashion())
+  },[dispatch])
+  const relevantData = fashion.slice(0,3)
 
-  const relevantData = [
-    { id: 5, name: "Ina T-Shirt", price: 35, image: ina, rating: '4.5' },
-    { id: 6, name: "Len Hat", price: 12, image: hat, rating: '4.5' }
-  ];
 
   return (
       <View style={{ backgroundColor: '#fff', flex: 1}}>
@@ -50,19 +49,20 @@ const Fashion = ({ route, navigation }) => {
         </View>
         <View style={{height: 200}}>
         <FlatList
-            data={itemData}
+            data={fashion}
             renderItem={({item}) =>
                 <FruitItem.FruitItem
                     name={item.name}
                     price={item.price}
                     image={item.image}
                     rating={item.rating}
+                    category={item.category}
                     navigation={navigation}
                 />
 
             }
             numColumns={2}
-            keyExtractor={itemData.id}
+            keyExtractor={fashion => fashion.id}
         />
         </View>
         <View>
@@ -81,11 +81,12 @@ const Fashion = ({ route, navigation }) => {
                     price={item.price}
                     image={item.image}
                     rating={item.rating}
+                    category={item.category}
                     navigation={navigation}
                 />
 
             }
-            keyExtractor={itemData.id}
+            keyExtractor={relevantData => relevantData.id}
         />
       </View>
   );

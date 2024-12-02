@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {
   Text,
   View,
@@ -11,9 +11,30 @@ import {
 import left_arrow from "../assets/icon/left-arrow.png";
 import { useCart } from "../context/CartContext";
 import { TextInput } from "react-native-paper";
-
+import {useDispatch, useSelector} from "react-redux";
+import {fetchCart, removeCartItem} from "../services/slices/CartSlice";
+let status =0;
 const Cart = ({ navigation }) => {
-  const { cartItems, totalAmount, removeFromCart } = useCart();
+    const { cartItems, setCartItems, totalAmount, removeFromCart, countProducts } = useCart();
+    const dispatch = useDispatch()
+    let cart = useSelector((state) => state.cart.cart)
+
+    useEffect(()=>{
+        dispatch(fetchCart())
+        status = 0;
+
+    },[dispatch])
+    useEffect(()=>{
+        status++
+            if(status < 5){
+                setCartItems(cart)
+            }
+    } )
+    function removeCart(item) {
+
+        dispatch(removeCartItem(item))
+        removeFromCart(item)
+    }
   return (
     <View style={{ backgroundColor: "#fff", flex: 1 }}>
       <View style={{ marginTop: 20, display: "flex", flexDirection: "row" }}>
@@ -43,16 +64,16 @@ const Cart = ({ navigation }) => {
                 marginBottom: 10,
               }}
             >
-              <Image source={item.image} style={{ width: 100, height: 70 }} />
+              <Image source={{uri: item.image}} style={{ width: 100, height: 70 }} />
               <View style={{ marginRight: 50 }}>
                 <Text style={{ fontWeight: "700" }}>{item.name}</Text>
                 <Text style={{ fontSize: 14, color: "gray" }}>
                   Consequat ex eu
                 </Text>
-                <Text style={{ fontWeight: "600" }}>{item.price}</Text>
+                <Text style={{ fontWeight: "600" }}>${item.price}</Text>
               </View>
               <View>
-                <TouchableOpacity onPress={() => removeFromCart(item.name)}>
+                <TouchableOpacity onPress={() => removeCart(item.name)}>
                   <Text>Delete</Text>
                 </TouchableOpacity>
                 <Text>x{item.quantity}</Text>
@@ -105,7 +126,13 @@ const Cart = ({ navigation }) => {
         </Text>
       </View>
       <TouchableOpacity
-        onPress={() => navigation.navigate('Payment')}
+        onPress={() => {
+            if(countProducts() !== 0){
+                navigation.navigate('Payment', cartItems)
+        } else {
+                alert('Please add some products to checkout!');
+            }
+        }}
         style={{
           width: "100%",
           height: 40,

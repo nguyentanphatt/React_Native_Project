@@ -2,12 +2,12 @@ import React from 'react'
 import { View, Text, TouchableOpacity, StyleSheet, Image} from 'react-native'
 import rating_5 from '../assets/image/Rating_5.png'
 import add from '../assets/icon/add.png'
-const FruitItem = ( {name, price, image, rating, navigation} ) => {
+const FruitItem = ( {name, price, image, rating, category, navigation} ) => {
     return (
         <View style={styles.itemContainer}>
-            <Image source={image} style={styles.itemImage}/>
+            <Image source={{uri: `${image}`}} style={styles.itemImage}/>
             <View style={{flexDirection: 'row', justifyContent: 'space-between', width: '100%'}}>
-                <TouchableOpacity onPress={()=>navigation.navigate('ItemDetail01Screen', [name, image, price, rating] )}>
+                <TouchableOpacity onPress={()=>navigation.navigate('ItemDetail01Screen', [name, image, price, rating, category] )}>
                     <View style={{marginRight: 0}}>
                         <Text style={{fontWeight: 'bold', padding: 5}}>{name}</Text>
                         <Image source={rating_5}/>
@@ -28,7 +28,7 @@ const RelevantFruitItem = ( {name, price, image, rating, navigation} ) => {
         <View style={styles.relevantItemContainer}>
             <View style={{flexDirection: 'row', justifyContent: 'space-between', width: '100%'}}>
                 <View style={{flexDirection: 'row'}}>
-                    <Image source={image} style={styles.relevantItemImage}/>
+                    <Image source={{uri: image}} style={styles.relevantItemImage}/>
                     <TouchableOpacity onPress={()=>navigation.navigate('ItemDetail01Screen', [name, image, price, rating] )}>
                         <View style={{marginRight: 0, padding: 10}}>
                             <Text style={{fontWeight: 'bold', padding: 1}}>{name}</Text>
@@ -87,6 +87,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         maxWidth: '60%',
         maxHeight: 100,
+        width: '100%',
         height: 100,
         marginBottom: 8,
     },

@@ -7,18 +7,7 @@ export const CartProvider = ({ children }) => {
     const [cartItems, setCartItems] = useState([]);
 
     const addToCart = (newItem) => {
-        setCartItems((prevItems) => {
-            const itemExists = prevItems.find((item) => item.name === newItem.name);
-            if (itemExists) {
-                return prevItems.map((item) =>
-                    item.name === newItem.name
-                        ? { ...item, quantity: item.quantity + 1 }
-                        : item
-                );
-            } else {
-                return [...prevItems, { ...newItem, quantity: 1 }];
-            }
-        });
+        return {}
     };
 
     const removeFromCart = (itemName) => {
@@ -26,20 +15,38 @@ export const CartProvider = ({ children }) => {
             prevItems.filter((item) => item.name !== itemName)
         );
     };
+    const removeAllCart = () => {
+        setCartItems((prevItems) =>
+            prevItems.filter((item) => item.name === 'trontronvien')
+        );
+    };
 
     const totalAmount = () => {
+        console.log(cartItems)
+        if(cartItems === undefined) {
+            return 0
+        }
+
         return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
     };
     const calculateTax = () => {
+        console.log(cartItems)
+        if(cartItems === undefined) {
+            return 0
+        }
+
         let total = (cartItems.reduce((total, item) => total + item.price * item.quantity, 0))*0.1
         return Math.round(total);
+    }
+    const countProducts = () => {
+        return cartItems.length;
     }
     const totalPlusTaxes = () => {
         return Math.round(totalAmount() + calculateTax())
     }
 
     return (
-        <CartContext.Provider value={{ cartItems, addToCart, totalAmount, removeFromCart, calculateTax, totalPlusTaxes }}>
+        <CartContext.Provider value={{ cartItems, setCartItems, addToCart, totalAmount, removeFromCart, calculateTax, totalPlusTaxes, removeAllCart, countProducts }}>
             {children}
         </CartContext.Provider>
     );

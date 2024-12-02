@@ -5,7 +5,7 @@ import add from '../assets/icon/add.png'
 const ElectronicsItem = ( {name, price, image, rating, navigation} ) => {
   return (
     <View style={styles.container}>
-    <Image source={image}/>
+    <Image source={{uri: image}} width={70} height={70}/>
       <TouchableOpacity onPress={()=>navigation.navigate('ItemDetail01Screen', [name, image, price, rating] )}>
         <View style={{marginRight: 100}}>
           <Text>{name}</Text>
