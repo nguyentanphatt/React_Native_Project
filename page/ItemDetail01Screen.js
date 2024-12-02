@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import {
   Text,
   View,
@@ -6,6 +6,7 @@ import {
   ScrollView,
   StyleSheet,
   TouchableOpacity,
+  Animated
 } from "react-native";
 import Swiper from "react-native-swiper";
 import Header from '../components/Header'
@@ -25,52 +26,62 @@ import Item from '../components/Item';
 import white_bell from '../assets/icon/white_bell.png'
 import cart_blue from '../assets/icon/cart_blue.png'
 import { useCart } from '../context/CartContext';
+import {useDispatch, useSelector} from "react-redux";
+import {fetchFashion} from "../services/slices/FashionSlice";
+import {fetchFruits} from "../services/slices/FruitsSlice";
+import {fetchBeauty} from "../services/slices/BeautySlice";
+import {fetchElectronics} from "../services/slices/ElectronicsSlice";
+import {addCart} from "../services/slices/CartSlice";
 const ItemDetail01Screen = ( {route, navigation} ) => {
-  const [name, image, price, rating] = route.params;
-  const { addToCart } = useCart()
-  const itemData = [
-    {
-      id: 1,
-      name: "SmartPhone",
-      price: 899,
-      image: phone_1,
-      category: "Smart Phone",
-      special: "Best Sales",
-      rating: '4.5'
-    },
-    {
-      id: 2,
-      name: "SmartPhone",
-      price: 799,
-      image: phone_2,
-      category: "Smart Phone",
-      special: "Best Matched",
-      rating: '4.5'
-    },
-    {
-      id: 3,
-      name: "SmartPhone",
-      price: 999,
-      image: phone_3,
-      category: "Smart Phone",
-      special: "Popular",
-      rating: '4.5'
-    },
-    {
-      id: 4,
-      name: "SmartPhone",
-      price: 599,
-      image: phone_4,
-      category: "Ipad",
-      special: "Best Sales",
-      rating: '4.5'
-    },
-  ]
 
+    const [isEnabled, setIsEnabled] = useState(false);
+    const [animation] = useState(new Animated.Value(0));
+
+    const toggleSwitch = () => {
+        const toValue = isEnabled ? 0 : 1;
+        Animated.spring(animation, {
+            toValue,
+            useNativeDriver: false,
+        }).start();
+        setIsEnabled(!isEnabled);
+    };
+
+    const translateX = animation.interpolate({
+        inputRange: [0, 1],
+        outputRange: [3, 22] // Adjust these values based on your container width
+    });
+
+    const [name, image, price, rating, category] = route.params;
+  const { addToCart } = useCart()
+  const dispatch = useDispatch()
+  let itemData = [];
+  let states = "fruits";
+  switch(category) {
+    case "Fruits":
+      states = "fruits";
+      break;
+    case "Beauty":
+      states = "beauty";
+      break;
+    case "Fashion":
+      states = "fashion"
+      break;
+    default:
+      states= "electronics"
+      break;
+  }
+  itemData = useSelector((state) => state[`${states}`][`${states}`])
+  useEffect(()=>{
+    dispatch(fetchFruits())
+    dispatch(fetchFashion())
+    dispatch(fetchBeauty())
+    dispatch(fetchElectronics())
+
+  },[dispatch])
   const itemsPerPage = 3;
 
   const relevanProduct = [];
-  for (let i = 0; i < itemData.length; i += itemsPerPage) {
+  for (let i = 0; i < 6; i += itemsPerPage) {
     relevanProduct.push(itemData.slice(i, i + itemsPerPage));
   }
 
@@ -79,6 +90,7 @@ const ItemDetail01Screen = ( {route, navigation} ) => {
       name, image, price, rating
     }
     addToCart(item)
+    dispatch(addCart(item))
     navigation.navigate('Cart')
   }
   return (
@@ -86,7 +98,7 @@ const ItemDetail01Screen = ( {route, navigation} ) => {
       <Header title={name} navigation={navigation}/>
       <ScrollView>
         <View style={{borderBottomWidth: 1, borderColor: 'lightgray', marginTop: 10}}>
-        <Image source={image} style={{width: 300, height: 100, marginLeft: 50, marginTop: 10, borderRadius: 10}}/>
+        <Image source={{uri: image}} style={{width: 300, height: 100, marginLeft: 50, marginTop: 10, borderRadius: 10}}/>
         <View style={styles.dotsList}>
           <View style={styles.dotsSpecial}></View>
           <View style={styles.dots}></View>
@@ -211,7 +223,7 @@ const ItemDetail01Screen = ( {route, navigation} ) => {
             showsPagination={false}
             showsButtons={false}
             autoplay={false}
-            style={{ height: 170 }}
+            style={{ height: 180 }}
           >
             {relevanProduct.map((page, index) => (
               <View
@@ -228,6 +240,8 @@ const ItemDetail01Screen = ( {route, navigation} ) => {
                     name={item.name}
                     rating={item.rating}
                     price={item.price}
+                    category={item.category}
+                    navigation={navigation}
                   />
                 ))}
               </View>
@@ -238,14 +252,28 @@ const ItemDetail01Screen = ( {route, navigation} ) => {
               <Image source={white_bell} style={{width:30, height: 30}}/>
             </View>
             <Text style={{color: 'gray'}}>Notify me of promotions</Text>
-            <View style={styles.btnContainer}>
-              <View style={styles.btnCirle}></View>
-            </View>
+              <TouchableOpacity onPress={toggleSwitch}>
+                  <View style={[
+                      styles.btnContainer,
+                      { backgroundColor: isEnabled ? '#1ac1d8' : 'lightgray' }
+                  ]}>
+                      <Animated.View
+                          style={[
+                              styles.btnCircle,
+                              { transform: [{ translateX }] }
+                          ]}
+                      />
+                  </View>
+              </TouchableOpacity>
           </View>
         </View>
         <View style={styles.buy}>
             <View style={styles.cartContainer}>
-              <Image source={cart_blue} style={{width: 20, height: 20}}/>
+              <TouchableOpacity onPress={() => {
+                  navigation.navigate('Cart')
+              }}>
+                <Image source={cart_blue} style={{width: 20, height: 20}}/>
+              </TouchableOpacity>
             </View>
             <TouchableOpacity style={styles.buyBtn} onPress={handleAddToCart}>
               <Text style={{fontSize: 18, fontWeight: '700', color: '#fff'}}>Buy Now</Text>
@@ -288,9 +316,9 @@ const styles = StyleSheet.create({
     marginBottom: 10
   },
   detail:{
-    display: 'flex', 
-    flexDirection: 'row', 
-    alignItems: 'center', 
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
     marginBottom: 20
   },
   review: {
@@ -362,7 +390,7 @@ const styles = StyleSheet.create({
     marginBottom: 10
   },
   notification: {
-    display: 'flex', 
+    display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -382,20 +410,18 @@ const styles = StyleSheet.create({
     backgroundColor: '#1ac1d8',
     borderRadius: 10
   },
-  btnContainer:{
-    width: 50,
-    height: 30,
-    backgroundColor: 'lightgray',
-    borderRadius: 20,
-    justifyContent: 'center'
-  },
-  btnCirle: {
-    width: 25,
-    height: 25,
-    borderRadius: 25,
-    backgroundColor: 'white',
-    marginLeft: 3
-  },
+    btnContainer: {
+        width: 50,
+        height: 30,
+        borderRadius: 20,
+        justifyContent: 'center',
+    },
+    btnCircle: {
+        width: 25,
+        height: 25,
+        borderRadius: 25,
+        backgroundColor: 'white',
+    },
   buy:{
     display: 'flex',
     flexDirection: 'row',

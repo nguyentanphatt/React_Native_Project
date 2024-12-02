@@ -15,8 +15,10 @@ import paypal from '../assets/icon/paypal.png'
 import maestro from '../assets/icon/maestro.png'
 import payment from '../assets/icon/payment.png'
 import left_arrow from "../assets/icon/left-arrow.png";
-const Payment = ( {navigation} ) => {
+const Payment = ( {route, navigation} ) => {
     const { totalAmount, calculateTax, totalPlusTaxes } = useCart();
+    let itemCart = route.params;
+    console.log(route.params);
     const [checked, setChecked] = useState('visa');
     let totalMoney = totalAmount();
     let tax = calculateTax();

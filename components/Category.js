@@ -28,7 +28,7 @@ const Category = ( {image, title, navigation} ) => {
             <View style={[styles.categoryImage, {backgroundColor}]}>
                 <Image source={image} style={{width: 60, height: 60}}/>
             </View>
-            <Text style={{fontWeight: '700'}}>{title}</Text>
+            <Text style={{fontWeight: '700', alignSelf: 'center'}}>{title}</Text>
         </TouchableOpacity>
     </View>
   )
@@ -38,6 +38,7 @@ export default Category
 
 const styles = StyleSheet.create({
     container:{
+        display: 'flex',
         alignItems: 'center',
         justifyContent: 'center'
     },

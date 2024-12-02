@@ -1,9 +1,23 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import paypal from "../assets/icon/paypal.png";
+import {useCart} from "../context/CartContext";
+import {useDispatch, useSelector} from "react-redux";
+import {fetchBeauty} from "../services/slices/BeautySlice";
+import {clearCart} from "../services/slices/CartSlice";
 
 const PaymentSuccess = ({ route, navigation }) => {
+    const { cartItems, setCartItems } = useCart();
+
+    const dispatch = useDispatch()
+    let cart = useSelector((state) => state.cart.status)
+
+    useEffect(()=>{
+
+        dispatch(clearCart())
+        setCartItems([])
+    },[dispatch])
     let payments = {
         visa: {
             name: 'Visa',
@@ -20,6 +34,7 @@ const PaymentSuccess = ({ route, navigation }) => {
     }
     const [totalMoney, paymentMethods, tax, totalPlusTax] = route.params;
     console.log(route.params)
+    const { removeAllCart } = useCart();
     return (
         <View style={styles.container}>
             {/* Success Icon */}
@@ -38,11 +53,11 @@ const PaymentSuccess = ({ route, navigation }) => {
             <View style={styles.summaryContainer}>
                 <View style={styles.row}>
                     <Text style={styles.label}>Subtotal</Text>
-                    <Text style={styles.value}>{totalMoney}</Text>
+                    <Text style={styles.value}>${totalMoney}</Text>
                 </View>
                 <View style={styles.row}>
                     <Text style={styles.label}>Tax (10%)</Text>
-                    <Text style={styles.value}>{tax}</Text>
+                    <Text style={styles.value}>${tax}</Text>
                 </View>
                 <View style={styles.row}>
                     <Text style={styles.label}>Fees</Text>
@@ -63,7 +78,7 @@ const PaymentSuccess = ({ route, navigation }) => {
                     <Text style={styles.label}>Total</Text>
                     <View style={styles.totalContainer}>
                         <Text style={styles.successText}>Success</Text>
-                        <Text style={styles.totalValue}>{totalPlusTax}</Text>
+                        <Text style={styles.totalValue}>${totalPlusTax}</Text>
                     </View>
                 </View>
             </View>
@@ -73,7 +88,12 @@ const PaymentSuccess = ({ route, navigation }) => {
                 <Text style={styles.ratingText}>How was your experience?</Text>
                 <View style={styles.starsContainer}>
                     {[1, 2, 3, 4, 5].map((star) => (
-                        <Icon key={star} name="star" size={30} color="#FFD700" />
+                        <TouchableOpacity onPress={() => {
+                            navigation.navigate('FeedbackScreen', {
+                                orderId: '123',
+                                productId: 'ABC123'
+                            });
+                        }}><Icon key={star} name="star" size={30} color="#FFD700" /></TouchableOpacity>
                     ))}
                 </View>
             </View>
@@ -81,7 +101,10 @@ const PaymentSuccess = ({ route, navigation }) => {
             {/* Back Button */}
             <TouchableOpacity
                 style={styles.button}
-                onPress={() => navigation.navigate('Home')}
+                onPress={() => {
+                    removeAllCart()
+                    navigation.navigate('Home')
+                }}
             >
                 <Icon name="home" size={20} color="white" />
                 <Text style={styles.buttonText}>Back to Home</Text>

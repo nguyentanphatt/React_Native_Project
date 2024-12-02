@@ -7,13 +7,17 @@ const Header = ( {title, navigation} ) => {
   return (
     <View style={styles.container}>
         <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-            <TouchableOpacity onPress={()=>navigation.goBack()}>
+            <TouchableOpacity onPress={()=>{
+                if(title !== 'All Deals') {
+                    navigation.goBack()
+                }
+            }}>
                 <Image source={left_arrow} style={{width: 30, height: 30, marginRight: 10}}/>
             </TouchableOpacity>
             <Text style={{fontWeight: '700', fontSize: 18}}>{title}</Text>
         </View>
         <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-            <Image source={cart} style={{width: 30, height: 30, marginRight: 10}}/>
+            <TouchableOpacity onPress={() => navigation.navigate('Cart')}><Image source={cart} style={{width: 30, height: 30, marginRight: 10}}/></TouchableOpacity>
             <Image source={user_icon} style={{width: 40, height: 40, borderRadius: 20}}/>
         </View>
     </View>
