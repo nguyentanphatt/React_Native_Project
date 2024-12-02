@@ -112,20 +112,20 @@ const ItemDetail01Screen = ( {route, navigation} ) => {
         </View>
         <View style={{borderBottomWidth: 1, borderColor: 'lightgray', marginTop: 10}}>
           <Text style={{fontSize: 16, fontWeight: '700'}}>Description</Text>
-          <Text style={{color: 'gray'}}>Quis occaecat magna elit magna do nisi ipsum amet excepteur tempor nisi exercitation qui...</Text>
+          <Text style={{color: 'gray'}}>The Samsung Galaxy S24 is a flagship smartphone featuring a 6.2-inch 120Hz display, Snapdragon 8 Gen 3 processor, versatile triple-camera system, and advanced AI capabilities, offering premium performance in a sleek package.</Text>
 
           <View style={{marginTop: 30}}>
             <View style={styles.detail}>
               <Image source={express} style={{width: 20, height: 20, marginRight: 20}}/>
-              <Text style={{color: 'gray', marginRight: 110}}>Express</Text>
+              <Text style={{color: 'gray', marginRight: 110}}>Express Shipping</Text>
               <Image source={arrow} style={{width: 25, height: 25, marginRight: 20}}/>
               <Text style={{color: 'gray'}}>30-day free return</Text>
             </View>
             <View style={styles.detail}>
               <Image source={star_blue} style={{width: 20, height: 20, marginRight: 20}}/>
-              <Text style={{color: 'gray', marginRight: 85}}>Good review</Text>
+              <Text style={{color: 'gray', marginRight: 85}}>Good reviews</Text>
               <Image source={medal} style={{width: 20, height: 20, marginRight: 20}}/>
-              <Text style={{color: 'gray'}}>Authorized shop</Text>
+              <Text style={{color: 'gray'}}>Authorized Store</Text>
             </View>
           </View>
         </View>
@@ -137,7 +137,7 @@ const ItemDetail01Screen = ( {route, navigation} ) => {
           <View style={styles.reviewsTable}>
             <View style={styles.reviewLeft}>
               <Text style={{fontSize: 20, fontWeight: '700'}}>{rating}/5</Text>
-              <Text style={{fontSize: 16, color: 'gray', marginTop: 10}}>(99 reviews)</Text>
+              <Text style={{fontSize: 16, color: 'gray', marginTop: 10}}>(48 reviews)</Text>
               <View style={styles.starList}>
                 <Image source={star} style={{width: 20, height: 20}}/>
                 <Image source={star} style={{width: 20, height: 20}}/>
@@ -198,16 +198,16 @@ const ItemDetail01Screen = ( {route, navigation} ) => {
             <View style={styles.reviewUser}>
               <Image source={user_1} style={{width: 40, height: 40}}/>
               <View style={{marginRight: 40}}>
-                <Text>Jevon Raynor</Text>
-                <Text style={{color: 'gray'}}>Deserunt minim incididunt cillum</Text>
+                <Text>TechWhiz93</Text>
+                <Text style={{color: 'gray'}}>Perfect phone! Stunning display, amazing AI features, and the camera quality is outstanding. Battery life is fantastic!</Text>
               </View>
               <Text style={{color: 'gray'}}>A day ago</Text>
             </View>
             <View style={styles.reviewUser}>
               <Image source={user_2} style={{width: 40, height: 40}}/>
               <View style={{marginRight: 40}}>
-                <Text>Jason D.</Text>
-                <Text style={{color: 'gray'}}>Magna pariatur sit et ullamco paria</Text>
+                <Text>SarahJ_Mobile</Text>
+                <Text style={{color: 'gray'}}>Best upgrade ever! Lightning-fast performance, gorgeous screen, and the AI tools are super helpful. Love everything about it!</Text>
               </View>
               <Text style={{color: 'gray'}}>3 day ago</Text>
             </View>

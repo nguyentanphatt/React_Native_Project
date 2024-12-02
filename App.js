@@ -15,7 +15,11 @@ import PaymentSuccess from "./page/PaymentSuccess";
 import FeedbackScreen from "./page/Feedback"
 import { Provider } from 'react-redux';
 import { store } from './services/Store';
-
+import { LogBox } from 'react-native';
+import LoginScreen from "./page/LoginScreen";
+import SearchScreen from "./page/SearchScreen";
+LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+LogBox.ignoreAllLogs();//Ignore all log notifications
 //import FilterScreen from "./page/FilterScreen";
 const Stack = createNativeStackNavigator()
 
@@ -26,6 +30,7 @@ export default function App() {
       <View style={styles.container}>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{headerShown: false}}>
+          <Stack.Screen name="LoginScreen" component={LoginScreen} />
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="Electronics" component={Electronics} />
           <Stack.Screen name="FreshFruits" component={FreshFruits} />
@@ -33,8 +38,8 @@ export default function App() {
           <Stack.Screen name="Beauty" component={Beauty} />
           <Stack.Screen name="PaymentSuccess" component={PaymentSuccess} />
           <Stack.Screen name="FeedbackScreen" component={FeedbackScreen} />
-          {/*<Stack.Screen name="FilterScreen" component={FilterScreen} />*/}
           <Stack.Screen name="ItemDetail01Screen" component={ItemDetail01Screen} />
+          <Stack.Screen name="SearchScreen" component={SearchScreen} />
           <Stack.Screen name="Cart" component={Cart} />
           <Stack.Screen name="Payment" component={Payment} />
         </Stack.Navigator>

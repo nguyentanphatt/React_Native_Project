@@ -128,6 +128,7 @@ const Cart = ({ navigation }) => {
       <TouchableOpacity
         onPress={() => {
             if(countProducts() !== 0){
+                status = 0;
                 navigation.navigate('Payment', cartItems)
         } else {
                 alert('Please add some products to checkout!');
